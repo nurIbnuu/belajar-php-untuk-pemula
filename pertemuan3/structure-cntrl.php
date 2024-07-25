@@ -1,4 +1,6 @@
 <?php
+// Belajar PHP untuk PEMULA | 5. STRUKTUR KENDALI
+
 //      Struktur Kendali
 //   Perulangan; for while do..while foreach:perulangan khusus array
 // memulai Inisialisasi nilai awal perulangan dengan nilai 0 agar terbisa jika bekerja dengan array

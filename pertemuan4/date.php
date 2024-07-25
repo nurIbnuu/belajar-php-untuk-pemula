@@ -1,4 +1,6 @@
 <?php
+// Belajar PHP untuk PEMULA | 6. FUNCTION
+
 //      Built in Function
 
 // Date/Time berhubungan dengan waktu; date(), time(), mktime(), strtotime(): 
