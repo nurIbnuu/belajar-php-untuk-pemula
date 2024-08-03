@@ -1,0 +1,131 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['login'])) {
+  header('Location: login.php');
+  exit;
+}
+
+
+require 'functions.php';
+
+
+// ambil data di URL
+$id = $_GET['id'];
+
+// query data ebook berdasarkan id
+$ebook = query("SELECT * FROM tb_ebooks WHERE id = $id")[0];
+
+// cek apakah tombol submit sudah ditekan atau belum
+if(isset($_POST['submit'])) {
+  // cek apakah data berhasil diubah
+  if(ubah($_POST) > 0) { // $_POST == isinya data baru yang diubah
+    echo "<script>
+            alert('DATA BERHASIL DIUBAH');
+            document.location.href = 'index.php';
+          </script>
+          ";
+  } else {
+    echo "<script>
+            alert('DATA BERHASIL DIUBAH');
+            document.location.href = 'index.php';
+          </script>
+          ";
+  }
+}
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" />
+
+  <title>Ubah Data Ebook</title>
+</head>
+<body>
+    <nav class="navbar bg-body-tertiary mb-2">
+      <div class="container">
+        <a class="navbar-brand fs-1" href="#"> Ubah Data Ebook </a>
+      </div>
+    </nav>
+
+
+    <form action="" method="post" enctype="multipart/form-data">
+      <!-- jangan lupa enctype supaya filenya bisa dikelola -->
+      <input type="hidden" name="id" value="<?= $ebook['id']; ?>">
+      <input type="hidden" name="gambarLama" value="<?= $ebook['picture']; ?>">
+      <!-- gambarLama supaya ketika user tidak mengganti gambar, gambarLama yang dipakai -->
+
+        <div class="container mt-4">
+          <div class="row mb-3">
+            <label for="picture" class="col-sm-2 col-form-label">Gambar</label>
+            
+            <div class="col-sm-10">
+              <input class="form-control" type="file" id="picture" name="picture"">
+              <!-- atribut value hanya untuk input type text -->
+              <img src="image/ebooks-sunnah/<?= $ebook['picture']; ?>" class="img-thumbnail">
+              <!-- sumber gambar adalah hasil query, misal di database ada nama gambar 10-adab-sehari-hari.jpg dan di directory juga ada nama gambar 10-adab-sehari-hari.jpg-->
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="title" class="col-sm-2 col-form-label">Judul</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="title" placeholder="Ex: Hadits Arba'in Nawawi: Matan dan Terjemah" name="title" value="<?= $ebook['title']; ?>"/>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="category" class="col-sm-2 col-form-label">Kategori</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="category" placeholder="Ex: Aqidah" name="category" value="<?= $ebook['category']; ?>"/>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="authors" class="col-sm-2 col-form-label">Penulis</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="authors" placeholder="Ex: Abu Zakariya Yahya bin Syaraf an-Nawawi ad-Dimasqi" name="authors" value="<?= $ebook['authors']; ?>"/>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="published" class="col-sm-2 col-form-label">Diterbitkan oleh</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="published" placeholder="Ex: Pustaka Syabbab" name="published" value="<?= $ebook['published']; ?>"/>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="year" class="col-sm-2 col-form-label">Tahun terbit</label>
+            <div class="col-sm-10">
+              <input type="number" class="form-control" id="year" placeholder="Ex: 2018" name="year"  value="<?= $ebook['year']; ?>"/>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col text-center">
+              <button type="submit" name="submit" class="btn btn-success">
+                <i class="bi bi-pencil"></i>
+                Ubah
+              </button>
+            
+              <a href="index.php" type="button" class="btn btn-danger">
+                <i class="bi bi-backspace"></i>
+                Batal
+              </a>
+            </div>
+          </div>
+      </div>
+    </form>
+</body>
+</html>
